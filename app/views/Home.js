@@ -1,13 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+
+import { Header } from '../sections/Header';
+import { Hero } from '../sections/Hero';
+import { Menu } from '../sections/Menu';
 
 export class Home extends React.Component {
     render() {
+        const { navigate } = this.props.navigation;
+        
         return (
-            <View>
-                <Text>This will be the Homepage</Text>
-                <Text>These other lines are here</Text>
-                <Text>So you can see the text in the app</Text>
+            <View style={ styles.container }>
+                <Header message='Press to Login'></Header>
+                <Hero></Hero>
+                <Menu navigate={ navigate }></Menu>
             </View>
         );
     }
