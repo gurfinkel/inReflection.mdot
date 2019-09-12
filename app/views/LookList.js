@@ -12,7 +12,7 @@ export class LookList extends React.Component {
 
         return(
             <SectionList
-                renderItem={({ item, index, section }) => <LookItem info={ item }></LookItem>}
+                renderItem={({ item, index, section }) => <LookItem navigate={ this.props.navigate } info={ item }></LookItem>}
                 renderSectionHeader={ ({ section: { title, description } }) => (
                     <View style={ styles.categoryStyles }>
                         <Text style={ styles.titleStyles }>{ title }</Text>
