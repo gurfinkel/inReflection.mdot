@@ -123,64 +123,64 @@ const garments = [
     { id: 113, name: "Undies that should'n always be kept under wraps..." },
 ];
 
-const checklist = [
+const garmentsByCategories = [
     {
         id: 1,
-        category: 'Pants, jumpsuits and shorts',
+        name: 'Pants, jumpsuits and shorts',
         items: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ],
     },
 
     {
         id: 2,
-        category: 'Skirts and dresses',
+        name: 'Skirts and dresses',
         items: [ 15, 16, 17, 18, 19, 20 ],
     },
 
     {
         id: 3,
-        category: 'Sweaters, sweatshirts, blouses and other tops',
+        name: 'Sweaters, sweatshirts, blouses and other tops',
         items: [ 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41 ],
     },
 
     {
         id: 4,
-        category: 'Jackets, blazers and coats',
+        name: 'Jackets, blazers and coats',
         items: [ 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60 ],
     },
 
     {
         id: 5,
-        category: 'Shoes',
+        name: 'Shoes',
         items: [ 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81 ],
     },
 
     {
         id: 6,
-        category: 'Bags',
+        name: 'Bags',
         items: [ 82, 83, 84, 85, 86, 87, 88, 89 ],
     },
 
     {
         id: 7,
-        category: 'Jewelry',
+        name: 'Jewelry',
         items: [ 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101 ],
     },
 
     {
         id: 8,
-        category: 'Belts',
+        name: 'Belts',
         items: [ 102, 103, 104 ],
     },
 
     {
         id: 9,
-        category: 'Scarves',
+        name: 'Scarves',
         items: [ 105, 106, 107, 108 ],
     },
 
     {
         id: 10,
-        category: 'Bathing suits and lingerie',
+        name: 'Bathing suits and lingerie',
         items: [ 109, 110, 111, 112, 113 ],
     },
 ];
@@ -188,7 +188,45 @@ const checklist = [
 const looks = [
     {
         id: 1,
-        category: 'Business is business',
+        name: 'From bed to work in one minute flat',
+        ingredients: [ 53, 6, 21, 102, 80, 82 ],
+        description: "Your alarm didn't go off",
+        recipe: "Play it simple and steer clear of questionable combos. When you don't have time, don't experiment. Stick with chic basics that won't attract the attention of the fashion police. Biker boots loosen up what would otherwise be a rather strict look",
+    },
+    {
+        id: 2,
+        name: 'Before an appointment at the bank, I have to manage my assets',
+        ingredients: [ 43, 2, 32, 102, 70, 86 ],
+        description: "You've overdone it spending on high-end labels and your bank account is in the red. You have to persuade your banker to give you a loan.",
+        recipe: "Leave your brand-new clothes in the closet - you don't want your loan officer to figure out where all the money went. To convince him that you're a serious woman who can rein in her expenses, choose a blazer (extra points if it has banker stripes). And to show that your account is not the only thing that's bare, show a little cleavage. Heels are a look you can bank on: if you can rise above it all - even when your account's in the red - you've found the golden ticket for getting out of debt.",
+    },
+    {
+        id: 3,
+        name: 'I have a tricky day ahead',
+        ingredients: [ 7, 24, 71, 92, 100 ],
+        description: "Your day is set to be endless stream of boring meetings and stressful appointments. Followed by a professional dinner right after work, with no time to pop home in between.",
+        recipe: "Arm yourself with clothes that keep you feeling upbeat. Pants with a printed motif immediately make things brighter. Velvet flats will see you through until the wee hours. Ans if you get bored during a meeting, you can play with your bracelets. Having fun at work is always a recipe for success.",
+    },
+    {
+        id: 4,
+        name: 'Asking for a raise',
+        ingredients: [ 44, 3, 36, 102, 64, 100 ],
+        description: "Your coworkers say you shouldn't automatically expect a raise. But you really feel you deserve one.",
+        recipe: "If there's ever a time to go totally anti-bling, it's now. You don't need to look like a damsel in distress (your boss knows how much he pays you), but point out to him that you don't intend to spend the rest of your life in loose-fitting jeans and white T-shirt. Throw in that you're wearing your father's blazer and watch. If he knows anything about fashion, he'll show compassion.",
+    },
+    {
+        id: 5,
+        name: 'From office to nightclub',
+        ingredients: [ 49, 8, 29, 111, 69, 95 ],
+        description: "There's no time to go home to change into a shiny top before you head out for a night on the town.",
+        recipe: "Bet all your chips on the tuxedo jacket: it's chic at the office and sexy at the nightclub. Just take off your blouse and wear nothing under the jacket - Yves Saint Laurent did it before anyone else. Wear the necklace around your neck during the day and as a belt in the evening. Now you're all set to commute, work and dance.",
+    },
+];
+
+const looksByCategories = [
+    {
+        id: 1,
+        title: 'Business is business',
         description: "For those who don't wear a uniform to work, you need to find an outfit that will make a good impression at the office - and we don't mean one with excessive (ulterior) motifs!",
         dilemma: [
             'From bed to work in one minute flat',
@@ -197,37 +235,31 @@ const looks = [
             'Asking for a raise',
             'From office to nightclub',
         ],
-        items: [
-            {
-                name: 'From bed to work in one minute flat',
-                ingredients: [ 53, 6, 21, 102, 80, 82 ],
-                description: "Your alarm didn't go off",
-                recipe: "Play it simple and steer clear of questionable combos. When you don't have time, don't experiment. Stick with chic basics that won't attract the attention of the fashion police. Biker boots loosen up what would otherwise be a rather strict look",
-            },
-            {
-                name: 'Before an appointment at the bank, I have to manage my assets',
-                ingredients: [ 43, 2, 32, 102, 70, 86 ],
-                description: "You've overdone it spending on high-end labels and your bank account is in the red. You have to persuade your banker to give you a loan.",
-                recipe: "Leave your brand-new clothes in the closet - you don't want your loan officer to figure out where all the money went. To convince him that you're a serious woman who can rein in her expenses, choose a blazer (extra points if it has banker stripes). And to show that your account is not the only thing that's bare, show a little cleavage. Heels are a look you can bank on: if you can rise above it all - even when your account's in the red - you've found the golden ticket for getting out of debt.",
-            },
-            {
-                name: 'I have a tricky day ahead',
-                ingredients: [ 7, 24, 71, 92, 100 ],
-                description: "Your day is set to be endless stream of boring meetings and stressful appointments. Followed by a professional dinner right after work, with no time to pop home in between.",
-                recipe: "Arm yourself with clothes that keep you feeling upbeat. Pants with a printed motif immediately make things brighter. Velvet flats will see you through until the wee hours. Ans if you get bored during a meeting, you can play with your bracelets. Having fun at work is always a recipe for success.",
-            },
-            {
-                name: 'Asking for a raise',
-                ingredients: [ 44, 3, 36, 102, 64, 100 ],
-                description: "Your coworkers say you shouldn't automatically expect a raise. But you really feel you deserve one.",
-                recipe: "If there's ever a time to go totally anti-bling, it's now. You don't need to look like a damsel in distress (your boss knows how much he pays you), but point out to him that you don't intend to spend the rest of your life in loose-fitting jeans and white T-shirt. Throw in that you're wearing your father's blazer and watch. If he knows anything about fashion, he'll show compassion.",
-            },
-            {
-                name: 'From office to nightclub',
-                ingredients: [ 49, 8, 29, 111, 69, 95 ],
-                description: "There's no time to go home to change into a shiny top before you head out for a night on the town.",
-                recipe: "Bet all your chips on the tuxedo jacket: it's chic at the office and sexy at the nightclub. Just take off your blouse and wear nothing under the jacket - Yves Saint Laurent did it before anyone else. Wear the necklace around your neck during the day and as a belt in the evening. Now you're all set to commute, work and dance.",
-            },
-        ],
+        data: [ 1, 2, 3, 4, 5 ],
     },
 ];
+
+export function getGarments() {
+    return garments;
+}
+
+export function getGarmentsChecklist() {
+    return garmentsByCategories
+        .map((category) => { return {
+                id: category.id,
+                title: category.name,
+                data: category.items.map((item) => garments.find(garment => garment.id === item)),
+            }
+        }
+    );
+}
+
+export function getLooks(sex) {
+    return looks;
+}
+
+export function getLooksChecklist() {
+    return looksByCategories;
+}
+
+export default { getGarments, getGarmentsChecklist, getLooks, getLooksChecklist };

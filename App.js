@@ -1,25 +1,40 @@
 import React from 'react';
 import { StackNavigator } from 'react-navigation';
 
-import { Contact } from './app/views/Contact';
-import { Home } from './app/views/Home';
+import { Adventure } from './app/views/Adventure';
+import { Appearance } from './app/views/Appearance';
+import { LookDetails } from './app/views/LookDetails';
+import { Sex } from './app/views/Sex';
+import { Wardrobe } from './app/views/Wardrobe';
 
-const MyRoutes = StackNavigator(
+const MainRoutes = StackNavigator(
     {
-        HomeRT: {
-            screen: Home,
+        AdventureRT: {
+            screen: Adventure,
         },
-        
-        ContactRT: {
-            screen: Contact,
+
+        AppearanceRT: {
+            screen: Appearance,
+        },
+
+        LookDetailsRT: {
+            screen: LookDetails,
+        },
+
+        SexRT: {
+            screen: Sex,
+        },
+
+        WardrobeRT: {
+            screen: Wardrobe,
         },
     }, {
-        initialRouteName: 'HomeRT',
+        initialRouteName: 'SexRT',
     }
 );
 
 export default function App() {
     return (
-        <MyRoutes></MyRoutes>
+        <MainRoutes></MainRoutes>
     );
 }
