@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { CheckBox } from 'react-native-elements';
+import { Body, CheckBox, ListItem, Text } from 'native-base';
 
 export class GarmentItem extends React.Component {
     constructor(props) {
@@ -19,7 +19,12 @@ export class GarmentItem extends React.Component {
 
     render() {
         return (
-            <CheckBox key={ this.props.info.id } title={ this.props.info.name } checked={ this.state.checked } onPress={ this.setChecked } style={styles.checkBoxStyles}></CheckBox>
+            <ListItem key={ this.props.info.id } onPress={ this.setChecked }>
+                <CheckBox checked={ this.state.checked }  />
+                <Body>
+                    <Text>{ this.props.info.name }</Text>
+                </Body>
+            </ListItem>
         )
     }
 }

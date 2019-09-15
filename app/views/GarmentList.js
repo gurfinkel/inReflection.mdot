@@ -1,34 +1,25 @@
-import React from 'react';
-import { StyleSheet, SectionList, Text } from 'react-native';
+import React, { Component } from 'react';
+import { SectionList } from 'react-native';
 
 import { getGarmentsChecklist } from '../services/dataService';
 
+import { GarmentCategory } from './GarmentCategory';
 import { GarmentItem } from './GarmentItem';
 
-export class GarmentList extends React.Component {
+export class GarmentList extends Component {
     render() {
         const sex = this.props.sex;
         const categories = getGarmentsChecklist(sex);
 
         return(
             <SectionList
-                renderItem={({ item, index, section }) => <GarmentItem info={ item }></GarmentItem>}
+                renderItem={({ item, index, section }) => <GarmentItem info={ item } />}
                 renderSectionHeader={ ({ section: { title } }) => (
-                    <Text style={ styles.categoryStyles }>{ title }</Text>
+                    <GarmentCategory title={ title } />
                 )}
                 sections={categories}
                 keyExtractor={(item, index) => item + index}
-            ></SectionList>
+            />
         )
     }
 }
-
-const styles = StyleSheet.create({
-    categoryStyles: {
-        backgroundColor: '#ffffff',
-        borderColor: '#000000',
-        borderWidth: 2,
-        fontSize: 24,
-        fontWeight: 'bold',
-    },
-});

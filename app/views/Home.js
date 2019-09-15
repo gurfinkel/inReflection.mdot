@@ -1,20 +1,46 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { StackNavigator } from 'react-navigation';
+import { StyleSheet, AsyncStorage, View } from 'react-native';
+import {StackNavigator} from "react-navigation";
 
+import { Adventure } from './Adventure';
+import { Appearance } from './Appearance';
 import { Header } from '../sections/Header';
-import { Hero } from '../sections/Hero';
-import { Menu } from '../sections/Menu';
+import { LookDetails } from './LookDetails';
+import { Sex } from './Sex';
+import { Wardrobe } from './Wardrobe';
+
+const MainRoutes = StackNavigator(
+    {
+        AdventureRT: {
+            screen: Adventure,
+        },
+        
+        AppearanceRT: {
+            screen: Appearance,
+        },
+        
+        LookDetailsRT: {
+            screen: LookDetails,
+        },
+        
+        SexRT: {
+            screen: Sex,
+        },
+        
+        WardrobeRT: {
+            screen: Wardrobe,
+        },
+    }, {
+        initialRouteName: 'SexRT',
+    }
+);
 
 export class Home extends React.Component {
     render() {
-        const { navigate } = this.props.navigation;
-        
         return (
             <View style={ styles.container }>
-                <Header message='Press to Login'></Header>
-                <Hero></Hero>
-                <Menu navigate={ navigate }></Menu>
+                <Header style={ styles.headerStyles }></Header>
+                <MainRoutes style={ styles.contentStyles }></MainRoutes>
             </View>
         );
     }
@@ -23,8 +49,13 @@ export class Home extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+    },
+    
+    headerStyles: {
+        flex: 1,
+    },
+    
+    contentStyles: {
+        flex: 9,
     },
 });

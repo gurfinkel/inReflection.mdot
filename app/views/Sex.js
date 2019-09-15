@@ -1,18 +1,40 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Alert, AsyncStorage, Text, TouchableOpacity, View } from 'react-native';
+
+import utils from '../utils';
 
 export class Sex extends React.Component {
+    static navigationOptions = {
+        header: null
+    };
+    
+    componentDidMount() {
+        this._bootstrapAsync();
+    }
+    
+    _bootstrapAsync = async () => {
+        const userSex = await AsyncStorage.getItem('userSex');
+        this.props.navigation.navigate(userSex ? 'WardrobeRT' : 'SexRT');
+    };
+    
+    goToAdventure = async (userSex) => {
+        if (utils.isBoy(userSex)) {
+            Alert.alert('We are working on it.');
+        } else {
+            await AsyncStorage.setItem('userSex', userSex, (err, result) => {
+                this.props.navigation.navigate('WardrobeRT', { sex: userSex, });
+            });
+        }
+    };
+    
     render() {
-        const { navigate } = this.props.navigation;
-
         return (
             <View style={ styles.container }>
                 <View style={ styles.buttonRow }>
-                    <TouchableOpacity disabled={true} onPress={ () => { navigate('AdventureRT', { sex: 1, }); } } style={ styles.leftButtonStyles }>
+                    <TouchableOpacity onPress={ () => this.goToAdventure('1') } style={ styles.buttonStyles }>
                         <Text style={ styles.buttonText }>Boy</Text>
-                        <Text style={ styles.smallText }>We are working on it.</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={ () => { navigate('AdventureRT', { sex: 0, }); } } style={ styles.rightButtonStyles }>
+                    <TouchableOpacity onPress={ () => this.goToAdventure('0') } style={ styles.buttonStyles }>
                         <Text style={ styles.buttonText }>Girl</Text>
                     </TouchableOpacity>
                 </View>
@@ -23,40 +45,31 @@ export class Sex extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: '100%',
-        width: '100%',
+        flex: 1,
+        justifyContent: 'center',
     },
-
+    
     buttonRow: {
-        flex: 1,
+        paddingLeft: 10,
+        paddingRight: 10,
         flexDirection: 'row',
+        justifyContent: 'space-between',
     },
-
-    leftButtonStyles: {
-        borderRightColor: '#ffffff',
-        borderRightWidth: 2,
-        backgroundColor: '#35605a',
+    
+    buttonStyles: {
+        borderColor: '#ffffff',
+        backgroundColor: '#2196F3',
+        borderWidth: 2,
+        borderRadius: 5,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        height: 100,
     },
-
-    rightButtonStyles: {
-        borderLeftColor: '#ffffff',
-        borderLeftWidth: 2,
-        backgroundColor: '#35605a',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
+    
     buttonText: {
         color: '#ffffff',
         fontSize: 36,
         fontWeight: 'bold',
-    },
-
-    smallText: {
-        fontFamily: 'Cochin',
     },
 });

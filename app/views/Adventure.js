@@ -14,10 +14,10 @@ export class Adventure extends React.Component {
             <View style={ styles.container }>
                 <Text style={ styles.titleStyles }>{ title }</Text>
                 <View style={ styles.buttonRow }>
-                    <TouchableOpacity style={ styles.leftButtonStyles } onPress={ () => { navigate('WardrobeRT', { sex: 1, }); } }>
+                    <TouchableOpacity style={ styles.buttonStyles } onPress={ () => { navigate('WardrobeRT', { sex: 1, }); } }>
                         <Text style={ styles.buttonText }>Wardrobe</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={ styles.rightButtonStyles }onPress={ () => { navigate('AppearanceRT', { sex: 0, }); } }>
+                    <TouchableOpacity style={ styles.buttonStyles }onPress={ () => { navigate('AppearanceRT', { sex: 0, }); } }>
                         <Text style={ styles.buttonText }>Looks</Text>
                     </TouchableOpacity>
                 </View>
@@ -28,7 +28,9 @@ export class Adventure extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        backgroundColor: '#000000',
         flex: 1,
+        padding: 10,
         height: '100%',
         width: '100%',
     },
@@ -41,30 +43,24 @@ const styles = StyleSheet.create({
     },
 
     buttonRow: {
-        flex: 3,
+        flex: 9,
         flexDirection: 'row',
+        justifyContent: 'space-between',
     },
 
-    leftButtonStyles: {
-        borderRightColor: '#ffffff',
-        borderRightWidth: 2,
-        backgroundColor: '#35605a',
+    buttonStyles: {
+        borderColor: '#ffffff',
+        borderWidth: 2,
+        backgroundColor: '#2196F3',
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-
-    rightButtonStyles: {
-        borderLeftColor: '#ffffff',
-        borderLeftWidth: 2,
-        backgroundColor: '#35605a',
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: 100,
     },
 
     buttonText: {
-        color: '#ffffff',
+        color: '#000000',
         fontSize: 36,
+        fontWeight: 'bold',
     },
 });
