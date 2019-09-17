@@ -1,23 +1,22 @@
 import React, { Component } from 'react';
-import { SectionList } from 'react-native';
-
-import { getGarmentsChecklist } from '../services/dataService';
+import { Alert, SectionList } from 'react-native';
 
 import { GarmentCategory } from './GarmentCategory';
 import { GarmentItem } from './GarmentItem';
 
 export class GarmentList extends Component {
+    onGarmentCheck(id) {
+        Alert.alert('Garment checked: ' + id);
+    };
+    
     render() {
-        const sex = this.props.sex;
-        const categories = getGarmentsChecklist(sex);
-
         return(
             <SectionList
-                renderItem={({ item, index, section }) => <GarmentItem info={ item } />}
+                renderItem={({ item, index, section }) => <GarmentItem info={ item } onItemCheck={ this.onGarmentCheck } />}
                 renderSectionHeader={ ({ section: { title } }) => (
                     <GarmentCategory title={ title } />
                 )}
-                sections={categories}
+                sections={ this.props.items }
                 keyExtractor={(item, index) => item + index}
             />
         )

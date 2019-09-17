@@ -15,6 +15,7 @@ export class GarmentItem extends React.Component {
 
     setChecked() {
         this.setState({ checked: !this.state.checked });
+        this.props.onItemCheck(this.props.info.id);
     }
 
     render() {

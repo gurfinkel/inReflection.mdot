@@ -1,9 +1,10 @@
-import React from 'react';
-import { StyleSheet, Alert, AsyncStorage, Text, TouchableOpacity, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Alert, AsyncStorage, View } from 'react-native';
+import { Button, Icon, Text } from 'native-base';
 
 import utils from '../utils';
 
-export class Sex extends React.Component {
+export class Sex extends Component {
     static navigationOptions = {
         header: null
     };
@@ -19,7 +20,7 @@ export class Sex extends React.Component {
     
     goToAdventure = async (userSex) => {
         if (utils.isBoy(userSex)) {
-            Alert.alert('We are working on it.');
+            Alert.alert('Coming soon', 'We are working on it.');
         } else {
             await AsyncStorage.setItem('userSex', userSex, (err, result) => {
                 this.props.navigation.navigate('WardrobeRT', { sex: userSex, });
@@ -31,12 +32,14 @@ export class Sex extends React.Component {
         return (
             <View style={ styles.container }>
                 <View style={ styles.buttonRow }>
-                    <TouchableOpacity onPress={ () => this.goToAdventure('1') } style={ styles.buttonStyles }>
+                    <Button onPress={ () => this.goToAdventure('1') } style={ styles.buttonStyles } primary large>
+                        <Icon type="FontAwesome5" name='male' style={ styles.buttonIcon } />
                         <Text style={ styles.buttonText }>Boy</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={ () => this.goToAdventure('0') } style={ styles.buttonStyles }>
+                    </Button>
+                    <Button onPress={ () => this.goToAdventure('0') } style={ styles.buttonStyles } danger large>
+                        <Icon type="FontAwesome5" name='female' style={ styles.buttonIcon } />
                         <Text style={ styles.buttonText }>Girl</Text>
-                    </TouchableOpacity>
+                    </Button>
                 </View>
             </View>
         );
@@ -57,17 +60,22 @@ const styles = StyleSheet.create({
     },
     
     buttonStyles: {
-        borderColor: '#ffffff',
-        backgroundColor: '#2196F3',
-        borderWidth: 2,
-        borderRadius: 5,
+        marginLeft: 5,
+        marginRight: 5,
+        paddingBottom: 10,
+        paddingTop: 10,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        height: 100,
     },
     
     buttonText: {
+        color: '#ffffff',
+        fontSize: 36,
+        fontWeight: 'bold',
+    },
+    
+    buttonIcon: {
         color: '#ffffff',
         fontSize: 36,
         fontWeight: 'bold',
