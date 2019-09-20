@@ -4,7 +4,7 @@ const garments = [
     { id: 3, name: 'Blue jeans' },
     { id: 4, name: 'White jeans' },
     { id: 5, name: 'High-waisted pants' },
-    { id: 6, name: 'Black velvet pants' },
+    { id: 6, name: 'Black velvet pants', img: require('./img/camel_mans_overcoat.png'), },
     { id: 7, name: 'Silk print pants' },
     { id: 8, name: 'Black cropped pants' },
     { id: 9, name: 'Black pants' },
@@ -21,7 +21,7 @@ const garments = [
     { id: 19, name: 'Long floral-print dress' },
     { id: 20, name: 'Long shirtdress' },
 
-    { id: 21, name: 'Black turtleneck' },
+    { id: 21, name: 'Black turtleneck', img: require('./img/camel_mans_overcoat.png'), },
     { id: 22, name: 'Black round-neck sweater' },
     { id: 23, name: 'Beige round-neck sweater' },
     { id: 24, name: 'Black V-neck sweater' },
@@ -54,7 +54,7 @@ const garments = [
     { id: 50, name: 'Black trench coat' },
     { id: 51, name: 'Beige trench coat' },
     { id: 52, name: "Navy men's overcoat" },
-    { id: 53, name: "Camel men's overcoat" },
+    { id: 53, name: "Camel men's overcoat", img: require('./img/camel_mans_overcoat.png'), },
     { id: 54, name: 'Velvet jacket' },
     { id: 55, name: 'Bomber jacket' },
     { id: 56, name: 'Sequined jacket' },
@@ -82,10 +82,10 @@ const garments = [
     { id: 77, name: 'Lace-up sneakers' },
     { id: 78, name: 'Slim-on sneakers' },
     { id: 79, name: 'Gum boots' },
-    { id: 80, name: 'Biker boots' },
+    { id: 80, name: 'Biker boots', img: require('./img/camel_mans_overcoat.png'), },
     { id: 81, name: 'Farm and ranch boots' },
 
-    { id: 82, name: 'Saddle bag' },
+    { id: 82, name: 'Saddle bag', img: require('./img/camel_mans_overcoat.png'), },
     { id: 83, name: 'Mini black evening bag' },
     { id: 84, name: 'Gold handbag' },
     { id: 85, name: 'Fringed bag' },
@@ -107,7 +107,7 @@ const garments = [
     { id: 100, name: 'Classic watch' },
     { id: 101, name: "Men's watch" },
 
-    { id: 102, name: 'Black belt' },
+    { id: 102, name: 'Black belt', img: require('./img/camel_mans_overcoat.png'), },
     { id: 103, name: 'Brown belt' },
     { id: 104, name: 'Cummerbund' },
 
@@ -516,7 +516,11 @@ export function getGarmentsChecklist() {
 }
 
 export function getLooks(sex) {
-    return looks;
+    return looks
+        .map((look) => {
+            look.ingredients = look.ingredients.map((item) => garments.find(garment => garment.id === item));
+            return look;
+        });
 }
 
 export function getLooksChecklist(sex) {
