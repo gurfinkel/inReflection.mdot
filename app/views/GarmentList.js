@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Alert, SectionList } from 'react-native';
+import { SectionList } from 'react-native';
 
 import { GarmentCategory } from './GarmentCategory';
 import { GarmentItem } from './GarmentItem';
 
 export class GarmentList extends Component {
     onGarmentCheck(id) {
-        Alert.alert('Garment checked: ' + id);
+        //console.log('Garment checked: ' + id);
     };
     
     render() {

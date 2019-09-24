@@ -23,7 +23,7 @@ export class Appearance extends React.Component {
     };
     
     render() {
-        return <LookList navigate={ this.props.navigation.navigate }></LookList>;
+        return <LookList navigate={ this.props.navigation.push }></LookList>;
     }
 }
 

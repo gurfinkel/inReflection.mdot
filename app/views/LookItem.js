@@ -1,10 +1,10 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text } from 'react-native';
 
-export class LookItem extends React.Component {
+export class LookItem extends Component {
     render() {
         return (
-            <Text key={ this.props.info.id } onPress={ () => { this.props.navigate('LookDetailsRT', { id: this.props.info.id, }); } } style={styles.textStyles}>{ this.props.info.name }</Text>
+            <Text key={ this.props.info.id } onPress={ () => { this.props.navigate('LookDetailsRT', { id: this.props.info.id, }); } } style={ styles.textStyles }>{ this.props.info.name }</Text>
         )
     }
 }

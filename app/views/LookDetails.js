@@ -11,7 +11,7 @@ export class LookDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: (
-                <TouchableOpacity onPress={ () => navigation.navigate('AppearanceRT') } style={ styles.headerLeftStyles }>
+                <TouchableOpacity onPress={ () => navigation.goBack() } style={ styles.headerLeftStyles }>
                     <HeaderIcon iconType={ 1 } />
                 </TouchableOpacity>
             ),
@@ -24,7 +24,7 @@ export class LookDetails extends Component {
         const { navigation } = this.props;
         const lookId = navigation.getParam('id', 0);
         const look = getLooks().find((item) => lookId === item.id);
-        const ingredients = look.ingredients.map((ingredient) => {
+        const ingredients = look.items.map((ingredient) => {
             return (
                 <ListItem key={ ingredient.id } thumbnail>
                     <Left>
