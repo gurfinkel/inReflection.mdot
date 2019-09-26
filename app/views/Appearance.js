@@ -28,18 +28,19 @@ export class Appearance extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    headerCenterStyles: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-        width: '100%',
-    },
     headerLeftStyles: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginRight: 5,
+        marginLeft: 5,
+        height: '100%',
+        width: '100%',
+    },
+    
+    headerCenterStyles: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
         height: '100%',
         width: '100%',
     },

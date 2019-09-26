@@ -34,11 +34,6 @@ const AppNavigator = createStackNavigator(
     },
     {
         initialRouteName: 'SexRT',
-        defaultNavigationOptions: {
-            headerRight: <TouchableOpacity><FontAwesomeIcon icon={ faTshirt } /></TouchableOpacity>,
-            headerTitle: <Header></Header>,
-            headerLeft: <TouchableOpacity><FontAwesomeIcon icon={ faPersonBooth } /></TouchableOpacity>,
-        },
     }
 );
 

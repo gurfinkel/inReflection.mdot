@@ -20,8 +20,12 @@ export class GarmentItem extends React.Component {
 
     render() {
         return (
-            <ListItem key={ this.props.info.id } onPress={ this.setChecked }>
-                <CheckBox checked={ this.state.checked }  />
+            <ListItem
+                key={ this.props.info.id }
+                onPress={ this.setChecked }
+                style={ styles.itemStyles }
+            >
+                <CheckBox checked={ this.state.checked } />
                 <Body>
                     <Text>{ this.props.info.name }</Text>
                 </Body>
@@ -31,7 +35,7 @@ export class GarmentItem extends React.Component {
 }
 
 const styles = StyleSheet.create({
-    checkBoxStyles: {
-        fontSize: 12,
+    itemStyles: {
+        marginRight: 15,
     },
 });

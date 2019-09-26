@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Body, ListItem, Text } from 'native-base';
 
 export class LookItem extends Component {
     render() {
         return (
-            <Text key={ this.props.info.id } onPress={ () => { this.props.navigate('LookDetailsRT', { id: this.props.info.id, }); } } style={ styles.textStyles }>{ this.props.info.name }</Text>
+            <ListItem
+                key={ this.props.info.id }
+                onPress={ () => { this.props.navigate('LookDetailsRT', { id: this.props.info.id, }); } }
+                style={ styles.itemStyles }>
+                <Body>
+                    <Text>{ this.props.info.name }</Text>
+                </Body>
+            </ListItem>
         )
     }
 }
 
 const styles = StyleSheet.create({
-    textStyles: {
-        borderColor: '#000000',
-        borderWidth: 2,
-        borderRadius: 5,
-        margin: 5,
-        padding: 5,
-        fontSize: 12,
+    itemStyles: {
+        marginRight: 15,
     },
 });

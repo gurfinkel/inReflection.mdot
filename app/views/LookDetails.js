@@ -1,11 +1,29 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-import { Body, Button, Card, CardItem, Container, Content, Icon, Left, List, ListItem, Right, Tab, Tabs, TabHeading, Text, Thumbnail } from 'native-base';
+import {
+    Body,
+    Card,
+    CardItem,
+    Container,
+    Icon,
+    Left,
+    List,
+    ListItem,
+    Right,
+    Tab,
+    Tabs,
+    TabHeading,
+    Text,
+    Thumbnail,
+    CheckBox
+} from 'native-base';
 
 import { getLooks } from '../services/dataService';
 
 import { HeaderIcon } from '../sections/HeaderIcon';
+
+const { height, width } = Dimensions.get('window');
 
 export class LookDetails extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -20,26 +38,17 @@ export class LookDetails extends Component {
         }
     };
     
+    onGarmentCheck(id) {
+        console.log('Garment checked: ' + id);
+    };
+    
     render() {
         const { navigation } = this.props;
         const lookId = navigation.getParam('id', 0);
         const look = getLooks().find((item) => lookId === item.id);
-        const ingredients = look.items.map((ingredient) => {
-            return (
-                <ListItem key={ ingredient.id } thumbnail>
-                    <Left>
-                        <Thumbnail square source={ ingredient.img } />
-                    </Left>
-                    <Right>
-                        <Text style={ styles.textStyles }>{ ingredient.name }</Text>
-                        <Text note numberOfLines={1}>Its time to build a difference . .</Text>
-                    </Right>
-                </ListItem>
-            )
-        });
         
         return (
-            <Container>
+            <Container style={ styles.containerStyles }>
                 <Tabs>
                     <Tab heading={ <TabHeading><Icon type="FontAwesome5" name='file-alt' /><Text>Description</Text></TabHeading> }>
                         <Card>
@@ -49,21 +58,39 @@ export class LookDetails extends Component {
                             <CardItem bordered>
                                 <Text style={ styles.textStyles }>{ look.description }</Text>
                             </CardItem>
-                            <CardItem>
+                            <CardItem bordered>
                                 <Text style={ styles.textStyles }>{ look.recipe }</Text>
                             </CardItem>
                             <CardItem>
-                                <List>
-                                    { ingredients }
-                                </List>
+                                <List
+                                    dataArray={ look.items }
+                                    renderRow={(item) =>
+                                        <ListItem
+                                            thumbnail
+                                            onPress={() => this.onGarmentCheck(item.id)}
+                                            style={ styles.listItemStyles }
+                                        >
+                                            <Left>
+                                                <Thumbnail square source={ item.img } />
+                                            </Left>
+                                            <Body>
+                                                <Text>{ item.name }</Text>
+                                            </Body>
+                                            <Right>
+                                                <CheckBox checked={ item.checked } />
+                                            </Right>
+                                        </ListItem>
+                                    }
+                                    keyExtractor={item => item.id.toString()} />
                             </CardItem>
                         </Card>
                     </Tab>
                     <Tab heading={ <TabHeading><Icon type="FontAwesome5" name='file-image' /><Text>Image</Text></TabHeading> }>
-                        <Image
-                            style={ styles.lookImage }
-                            source={ look.img }
-                        />
+                        <Card>
+                            <CardItem cardBody>
+                                <Image source={ look.img } style={ styles.lookImage } />
+                            </CardItem>
+                        </Card>
                     </Tab>
                 </Tabs>
             </Container>
@@ -72,6 +99,11 @@ export class LookDetails extends Component {
 }
 
 const styles = StyleSheet.create({
+    containerStyles: {
+        marginLeft: 5,
+        marginRight: 5,
+    },
+    
     headerLeftStyles: {
         flex: 1,
         alignItems: 'center',
@@ -86,9 +118,14 @@ const styles = StyleSheet.create({
         color: '#808080',
     },
     
+    listItemStyles: {
+        marginBottom: 3,
+        marginTop: 3,
+    },
+    
     lookImage: {
         flex: 1,
-        height: undefined,
-        width: undefined,
+        height: height,
+        width: width,
     },
 });

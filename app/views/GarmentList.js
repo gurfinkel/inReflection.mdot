@@ -6,7 +6,7 @@ import { GarmentItem } from './GarmentItem';
 
 export class GarmentList extends Component {
     onGarmentCheck(id) {
-        //console.log('Garment checked: ' + id);
+        console.log('Garment checked: ' + id);
     };
     
     render() {
