@@ -42,9 +42,20 @@ export class Wardrobe extends Component {
         const wardrobe = await AsyncStorage.getItem('wardrobe');
     
         this.setState({ userSex });
-    
+        
         if (wardrobe) {
             this.setState({ items: JSON.parse(wardrobe), });
+            
+            if (!this.state.items[0].data[0].img) {
+                await AsyncStorage.clear();
+    
+                const items = getGarmentsChecklist().map((x) => { x.checked = false; x.data = x.data.map((y) => { y.checked = false; return y; }); return x; });
+    
+                await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
+                    this.setState({ items });
+                    this.setState({ userSex });
+                });
+            }
         } else {
             const items = getGarmentsChecklist().map((x) => { x.checked = false; x.data = x.data.map((y) => { y.checked = false; return y; }); return x; });
             

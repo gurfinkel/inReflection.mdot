@@ -92,7 +92,6 @@ export class LookDetails extends Component {
 
         for (const x of items) {
             for (const y of x.data) {
-
                 if (id === y.id) {
                     item = y;
                 }
@@ -103,7 +102,7 @@ export class LookDetails extends Component {
 
         this.setState({ look });
 
-        item.checked = !item.checked;
+        item.checked = garment.checked;
 
         await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
             this.setState({ items });
