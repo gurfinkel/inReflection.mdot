@@ -1,3 +1,7 @@
+# Expo
+.expo
+__generated__
+
 # Xcode
 !**/*.xcodeproj
 !**/*.pbxproj
@@ -97,3 +101,12 @@ RNTester/build
 
 # Bundle artifact
 *.jsbundle
+
+# Expo Client builds
+/client-builds
+
+# Expo web env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

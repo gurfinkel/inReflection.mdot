@@ -41,7 +41,7 @@ export class Wardrobe extends Component {
         const userSex = await AsyncStorage.getItem('userSex');
         const wardrobe = await AsyncStorage.getItem('wardrobe');
     
-        this.setState({ userSex, });
+        this.setState({ userSex });
     
         if (wardrobe) {
             this.setState({ items: JSON.parse(wardrobe), });
@@ -49,19 +49,27 @@ export class Wardrobe extends Component {
             const items = getGarmentsChecklist().map((x) => { x.checked = false; x.data = x.data.map((y) => { y.checked = false; return y; }); return x; });
             
             await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
-                this.setState({ items, });
+                this.setState({ items });
             });
         }
     };
 
     onGarmentCheck = async (id) => {
         const items = this.state.items;
-        const item = items.find(x => id === x.id);
+        let item = null;
+
+        for (const x of items) {
+            for (const y of x.data) {
+                if (id === y.id) {
+                    item = y;
+                }
+            }
+        }
 
         item.checked = !item.checked;
 
         await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
-            this.setState({ items, });
+            this.setState({ items });
         });
     };
     
