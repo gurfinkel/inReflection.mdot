@@ -53,9 +53,20 @@ export class Wardrobe extends Component {
             });
         }
     };
+
+    onGarmentCheck = async (id) => {
+        const items = this.state.items;
+        const item = items.find(x => id === x.id);
+
+        item.checked = !item.checked;
+
+        await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
+            this.setState({ items, });
+        });
+    };
     
     render() {
-        return <GarmentList items={ this.state.items } />;
+        return <GarmentList items={ this.state.items } onItemCheck={ this.onGarmentCheck } />;
     }
 }
 

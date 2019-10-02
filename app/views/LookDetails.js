@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, AsyncStorage, Dimensions, Image, TouchableOpacity } from 'react-native';
 
 import {
     Body,
@@ -37,16 +37,44 @@ export class LookDetails extends Component {
             headerRight: null,
         }
     };
-    
-    onGarmentCheck(id) {
-        console.log('Garment checked: ' + id);
-    };
-    
-    render() {
+
+    constructor(props) {
+        super(props);
+
         const { navigation } = this.props;
         const lookId = navigation.getParam('id', 0);
         const look = getLooks().find((item) => lookId === item.id);
-        
+
+        this.state = {
+            look,
+            userSex: 0,
+        }
+    }
+
+    componentDidMount() {
+        this._bootstrapAsync();
+    }
+
+    _bootstrapAsync = async () => {
+        await AsyncStorage.getItem('userSex', (err, userSex) => {
+            this.setState({ userSex, });
+        });
+
+        console.log('LookDetails view got user sex: ' + this.state.userSex);
+    };
+
+    onGarmentCheck(id) {
+        const { look } = this.state;
+        const garment = look.items.find(item => id === item.id);
+
+        garment.checked = !garment.checked;
+
+        this.setState({ look });
+    };
+    
+    render() {
+        const { look } = this.state;
+
         return (
             <Container style={ styles.containerStyles }>
                 <Tabs>

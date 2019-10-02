@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, AsyncStorage, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 
 import { LookList } from './LookList';
 
@@ -20,6 +20,27 @@ export class Appearance extends React.Component {
             ),
             headerRight: null,
         }
+    };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            userSex: 0,
+            items: [],
+        }
+    }
+
+    componentDidMount() {
+        this._bootstrapAsync();
+    }
+
+    _bootstrapAsync = async () => {
+        await AsyncStorage.getItem('userSex', (err, userSex) => {
+            this.setState({ userSex, });
+        });
+
+        console.log('Appearance view got user sex: ' + this.state.userSex);
     };
     
     render() {

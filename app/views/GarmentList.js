@@ -5,14 +5,10 @@ import { GarmentCategory } from './GarmentCategory';
 import { GarmentItem } from './GarmentItem';
 
 export class GarmentList extends Component {
-    onGarmentCheck(id) {
-        console.log('Garment checked: ' + id);
-    };
-    
     render() {
         return(
             <SectionList
-                renderItem={({ item, index, section }) => <GarmentItem info={ item } onItemCheck={ this.onGarmentCheck } />}
+                renderItem={({ item, index, section }) => <GarmentItem info={ item } onItemCheck={ this.props.onItemCheck } />}
                 renderSectionHeader={ ({ section: { title } }) => (
                     <GarmentCategory title={ title } />
                 )}
