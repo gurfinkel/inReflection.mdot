@@ -39,8 +39,6 @@ export class Appearance extends React.Component {
         await AsyncStorage.getItem('userSex', (err, userSex) => {
             this.setState({ userSex });
         });
-
-        console.log('Appearance view got user sex: ' + this.state.userSex);
     };
     
     render() {

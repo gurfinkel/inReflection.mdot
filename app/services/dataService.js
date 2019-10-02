@@ -705,15 +705,7 @@ export function getGarmentsChecklist() {
 }
 
 export function getLooks(sex) {
-    if (looks[0].items) {
-        return looks;
-    }
-    
-    return looks
-        .map((look) => {
-            look.items = look.ingredients.map((item) => garments.find(garment => garment.id === item));
-            return look;
-        });
+    return looks;
 }
 
 export function getLooksChecklist(sex) {

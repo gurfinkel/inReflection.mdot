@@ -46,6 +46,7 @@ export class LookDetails extends Component {
         const look = getLooks().find((item) => lookId === item.id);
 
         this.state = {
+            items: [],
             look,
             userSex: 0,
         }
@@ -60,16 +61,53 @@ export class LookDetails extends Component {
             this.setState({ userSex, });
         });
 
-        console.log('LookDetails view got user sex: ' + this.state.userSex);
+        await AsyncStorage.getItem('wardrobe', (err, wardrobe) => {
+            this.setState({ items: JSON.parse(wardrobe), });
+        });
+
+        const { items, look } = this.state;
+
+        look.items = look.ingredients.map(ingredient => {
+            let result = {};
+
+            for (const x of items) {
+                for (const y of x.data) {
+                    if (ingredient === y.id) {
+                        result = y;
+                        result.category = x.title;
+                    }
+                }
+            }
+
+            return result;
+        });
+
+        this.setState({ look, });
     };
 
-    onGarmentCheck(id) {
-        const { look } = this.state;
+    onGarmentCheck = async (id) => {
+        const { items, look } = this.state;
         const garment = look.items.find(item => id === item.id);
+        let item = null;
+
+        for (const x of items) {
+            for (const y of x.data) {
+
+                if (id === y.id) {
+                    item = y;
+                }
+            }
+        }
 
         garment.checked = !garment.checked;
 
         this.setState({ look });
+
+        item.checked = !item.checked;
+
+        await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
+            this.setState({ items });
+        });
     };
     
     render() {
@@ -103,6 +141,7 @@ export class LookDetails extends Component {
                                             </Left>
                                             <Body>
                                                 <Text>{ item.name }</Text>
+                                                <Text note numberOfLines={1}>{ item.category }</Text>
                                             </Body>
                                             <Right>
                                                 <CheckBox checked={ item.checked } />
