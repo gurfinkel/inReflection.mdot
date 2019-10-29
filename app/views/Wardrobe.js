@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { StyleSheet, AsyncStorage, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 
 import { GarmentList } from './GarmentList';
-
 import { HeaderIcon } from '../sections/HeaderIcon';
 
-import { getGarmentsChecklist } from '../services/dataService';
-
+@inject('store') @observer
 export class Wardrobe extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
@@ -24,68 +23,11 @@ export class Wardrobe extends Component {
         }
     };
     
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            userSex: 0,
-            items: [],
-        }
-    }
-    
-    componentDidMount() {
-        this._bootstrapAsync();
-    }
-    
-    _bootstrapAsync = async () => {
-        const userSex = await AsyncStorage.getItem('userSex');
-        const wardrobe = await AsyncStorage.getItem('wardrobe');
-    
-        this.setState({ userSex });
-        
-        if (wardrobe) {
-            this.setState({ items: JSON.parse(wardrobe), });
-            
-            if (!this.state.items[0].data[0].img) {
-                await AsyncStorage.clear();
-    
-                const items = getGarmentsChecklist().map((x) => { x.checked = false; x.data = x.data.map((y) => { y.checked = false; return y; }); return x; });
-    
-                await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
-                    this.setState({ items });
-                    this.setState({ userSex });
-                });
-            }
-        } else {
-            const items = getGarmentsChecklist().map((x) => { x.checked = false; x.data = x.data.map((y) => { y.checked = false; return y; }); return x; });
-            
-            await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
-                this.setState({ items });
-            });
-        }
-    };
-
-    onGarmentCheck = async (id) => {
-        const items = this.state.items;
-        let item = null;
-
-        for (const x of items) {
-            for (const y of x.data) {
-                if (id === y.id) {
-                    item = y;
-                }
-            }
-        }
-
-        item.checked = !item.checked;
-
-        await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
-            this.setState({ items });
-        });
-    };
-    
     render() {
-        return <GarmentList items={ this.state.items } onItemCheck={ this.onGarmentCheck } />;
+        return (
+            this.props.store.garments && this.props.store.garments.length ?
+                <GarmentList items={ this.props.store.garments } /> : <View />
+        );
     }
 }
 

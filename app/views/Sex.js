@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert, AsyncStorage, View } from 'react-native';
+import { StyleSheet, Alert, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 import { Button, Icon, Text } from 'native-base';
 
 import utils from '../utils';
 
+@inject('store') @observer
 export class Sex extends Component {
     static navigationOptions = {
         header: null
     };
     
     componentDidMount() {
-        this._bootstrapAsync();
+        this.props.navigation.navigate(this.props.store.sex ? 'WardrobeRT' : 'SexRT');
     }
-    
-    _bootstrapAsync = async () => {
-        const userSex = await AsyncStorage.getItem('userSex');
-        this.props.navigation.navigate(userSex ? 'WardrobeRT' : 'SexRT');
-    };
     
     goToAdventure = async (userSex) => {
         if (utils.isBoy(userSex)) {
-            Alert.alert('Coming soon', 'We are working on it.');
+            // Alert.alert('Coming soon', 'We are working on it.');
+            await this.props.store.setSex(userSex);
+            this.props.navigation.navigate('WardrobeRT');
         } else {
-            await AsyncStorage.setItem('userSex', userSex, (err, result) => {
-                this.props.navigation.navigate('WardrobeRT', { sex: userSex, });
-            });
+            await this.props.store.setSex(userSex);
+            this.props.navigation.navigate('WardrobeRT');
         }
     };
     
@@ -32,11 +30,11 @@ export class Sex extends Component {
         return (
             <View style={ styles.container }>
                 <View style={ styles.buttonRow }>
-                    <Button onPress={ () => this.goToAdventure('1') } style={ styles.buttonStyles } primary large>
+                    <Button onPress={ () => this.goToAdventure('1') } style={ styles.buttonStyles } large>
                         <Icon type="FontAwesome5" name='male' style={ styles.buttonIcon } />
                         <Text style={ styles.buttonText }>Boy</Text>
                     </Button>
-                    <Button onPress={ () => this.goToAdventure('0') } style={ styles.buttonStyles } danger large>
+                    <Button onPress={ () => this.goToAdventure('2') } style={ styles.buttonStyles } large>
                         <Icon type="FontAwesome5" name='female' style={ styles.buttonIcon } />
                         <Text style={ styles.buttonText }>Girl</Text>
                     </Button>
@@ -60,6 +58,7 @@ const styles = StyleSheet.create({
     },
     
     buttonStyles: {
+        backgroundColor: '#808080',
         marginLeft: 5,
         marginRight: 5,
         paddingBottom: 10,

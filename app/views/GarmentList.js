@@ -8,7 +8,7 @@ export class GarmentList extends Component {
     render() {
         return(
             <SectionList
-                renderItem={({ item, index, section }) => <GarmentItem info={ item } onItemCheck={ this.props.onItemCheck } />}
+                renderItem={({ item, index, section }) => <GarmentItem info={ item } />}
                 renderSectionHeader={ ({ section: { title } }) => (
                     <GarmentCategory title={ title } />
                 )}

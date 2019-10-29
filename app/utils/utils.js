@@ -3,7 +3,7 @@ export function isBoy(sex) {
 }
 
 export function isGirl(sex) {
-    return 0 == sex;
+    return 2 == sex;
 }
 
 export function isWardrobeSection(section) {

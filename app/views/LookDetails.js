@@ -1,30 +1,25 @@
 import React, { Component } from 'react';
-import { StyleSheet, AsyncStorage, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { inject, observer } from 'mobx-react';
 
 import {
-    Body,
     Card,
     CardItem,
     Container,
     Icon,
-    Left,
     List,
-    ListItem,
-    Right,
     Tab,
     Tabs,
     TabHeading,
     Text,
-    Thumbnail,
-    CheckBox
 } from 'native-base';
 
-import { getLooks } from '../services/dataService';
-
+import { GarmentItem } from './GarmentItem';
 import { HeaderIcon } from '../sections/HeaderIcon';
 
 const { height, width } = Dimensions.get('window');
 
+@inject('store') @observer
 export class LookDetails extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
@@ -38,79 +33,18 @@ export class LookDetails extends Component {
         }
     };
 
-    constructor(props) {
-        super(props);
-
+    render() {
         const { navigation } = this.props;
         const lookId = navigation.getParam('id', 0);
-        const look = getLooks().find((item) => lookId === item.id);
+        let look = {};
 
-        this.state = {
-            items: [],
-            look,
-            userSex: 0,
-        }
-    }
-
-    componentDidMount() {
-        this._bootstrapAsync();
-    }
-
-    _bootstrapAsync = async () => {
-        await AsyncStorage.getItem('userSex', (err, userSex) => {
-            this.setState({ userSex, });
-        });
-
-        await AsyncStorage.getItem('wardrobe', (err, wardrobe) => {
-            this.setState({ items: JSON.parse(wardrobe), });
-        });
-
-        const { items, look } = this.state;
-
-        look.items = look.ingredients.map(ingredient => {
-            let result = {};
-
-            for (const x of items) {
-                for (const y of x.data) {
-                    if (ingredient === y.id) {
-                        result = y;
-                        result.category = x.title;
-                    }
-                }
-            }
-
-            return result;
-        });
-
-        this.setState({ look, });
-    };
-
-    onGarmentCheck = async (id) => {
-        const { items, look } = this.state;
-        const garment = look.items.find(item => id === item.id);
-        let item = null;
-
-        for (const x of items) {
-            for (const y of x.data) {
-                if (id === y.id) {
-                    item = y;
-                }
+        for (let i = 0; i < this.props.store.looks.length; ++i) {
+            const x = this.props.store.looks[i];
+            look = x.data.find(y => y.id === lookId);
+            if (look) {
+                break;
             }
         }
-
-        garment.checked = !garment.checked;
-
-        this.setState({ look });
-
-        item.checked = garment.checked;
-
-        await AsyncStorage.setItem('wardrobe', JSON.stringify(items), (err, result) => {
-            this.setState({ items });
-        });
-    };
-    
-    render() {
-        const { look } = this.state;
 
         return (
             <Container style={ styles.containerStyles }>
@@ -128,24 +62,9 @@ export class LookDetails extends Component {
                             </CardItem>
                             <CardItem>
                                 <List
-                                    dataArray={ look.items }
+                                    dataArray={ look.ingredients }
                                     renderRow={(item) =>
-                                        <ListItem
-                                            thumbnail
-                                            onPress={() => this.onGarmentCheck(item.id)}
-                                            style={ styles.listItemStyles }
-                                        >
-                                            <Left>
-                                                <Thumbnail square source={ item.img } />
-                                            </Left>
-                                            <Body>
-                                                <Text>{ item.name }</Text>
-                                                <Text note numberOfLines={1}>{ item.category }</Text>
-                                            </Body>
-                                            <Right>
-                                                <CheckBox checked={ item.checked } />
-                                            </Right>
-                                        </ListItem>
+                                        <GarmentItem info={ item } />
                                     }
                                     keyExtractor={item => item.id.toString()} />
                             </CardItem>
@@ -154,7 +73,7 @@ export class LookDetails extends Component {
                     <Tab heading={ <TabHeading><Icon type="FontAwesome5" name='file-image' /><Text>Image</Text></TabHeading> }>
                         <Card>
                             <CardItem cardBody>
-                                <Image source={ look.img } style={ styles.lookImage } />
+                                <Image source={{ uri: look.img }} style={ styles.lookImage } />
                             </CardItem>
                         </Card>
                     </Tab>
@@ -182,11 +101,6 @@ const styles = StyleSheet.create({
     textStyles: {
         fontSize: 12,
         color: '#808080',
-    },
-    
-    listItemStyles: {
-        marginBottom: 3,
-        marginTop: 3,
     },
     
     lookImage: {

@@ -1,11 +1,12 @@
-import React from 'react';
-import { StyleSheet, AsyncStorage, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { inject, observer } from 'mobx-react';
 
 import { LookList } from './LookList';
-
 import { HeaderIcon } from '../sections/HeaderIcon';
 
-export class Appearance extends React.Component {
+@inject('store') @observer
+export class Appearance extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             headerLeft: (
@@ -21,28 +22,10 @@ export class Appearance extends React.Component {
             headerRight: null,
         }
     };
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            userSex: 0,
-            items: [],
-        }
-    }
-
-    componentDidMount() {
-        this._bootstrapAsync();
-    }
-
-    _bootstrapAsync = async () => {
-        await AsyncStorage.getItem('userSex', (err, userSex) => {
-            this.setState({ userSex });
-        });
-    };
     
     render() {
-        return <LookList navigate={ this.props.navigation.push }></LookList>;
+        return this.props.store.looks && this.props.store.looks.length ?
+            <LookList items={ this.props.store.looks } navigate={ this.props.navigation.push } /> : <View />;
     }
 }
 

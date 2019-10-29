@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { Body, CheckBox, ListItem, Text } from 'native-base';
+import { inject, observer } from 'mobx-react';
+import { Body, CheckBox, Left, ListItem, Right, Text, Thumbnail } from 'native-base';
 
+@inject('store') @observer
 export class GarmentItem extends React.Component {
     constructor(props) {
         super(props);
@@ -10,25 +12,33 @@ export class GarmentItem extends React.Component {
             checked: props.info.checked,
         };
 
-        this.setChecked = this.setChecked.bind(this);
+        this.onItemClick = this.onItemClick.bind(this);
     }
 
     setChecked() {
         this.setState({ checked: !this.state.checked });
-        this.props.onItemCheck(this.props.info.id);
+        this.props.store.onGarmentCheck(this.props.info.id);
     }
 
     render() {
+        const { info } = this.props;
+
         return (
             <ListItem
-                key={ this.props.info.id }
-                onPress={ this.setChecked }
+                thumbnail
+                onPress={ this.onItemClick }
                 style={ styles.itemStyles }
             >
-                <CheckBox checked={ this.state.checked } />
+                <Left>
+                    <Thumbnail square source={{ uri: info.img }} />
+                </Left>
                 <Body>
-                    <Text>{ this.props.info.name }</Text>
+                    <Text>{ info.name }</Text>
+                    <Text note numberOfLines={ 1 }>{ info.category }</Text>
                 </Body>
+                <Right>
+                    <CheckBox checked={ this.state.checked } />
+                </Right>
             </ListItem>
         )
     }
@@ -36,6 +46,7 @@ export class GarmentItem extends React.Component {
 
 const styles = StyleSheet.create({
     itemStyles: {
-        marginRight: 15,
+        marginBottom: 3,
+        marginTop: 3,
     },
 });
