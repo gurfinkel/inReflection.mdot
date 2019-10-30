@@ -11,11 +11,11 @@ export class GarmentItem extends React.Component {
         this.state = {
             checked: props.info.checked,
         };
-
+        
         this.onItemClick = this.onItemClick.bind(this);
     }
-
-    setChecked() {
+    
+    onItemClick() {
         this.setState({ checked: !this.state.checked });
         this.props.store.onGarmentCheck(this.props.info.id);
     }
@@ -34,7 +34,6 @@ export class GarmentItem extends React.Component {
                 </Left>
                 <Body>
                     <Text>{ info.name }</Text>
-                    <Text note numberOfLines={ 1 }>{ info.category }</Text>
                 </Body>
                 <Right>
                     <CheckBox checked={ this.state.checked } />
