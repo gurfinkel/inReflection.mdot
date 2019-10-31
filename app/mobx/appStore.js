@@ -4,6 +4,7 @@ import DataService from '../services/dataService';
 
 class Store {
     @observable garments;
+    @observable items;
     @observable looks;
     @observable sex;
 
@@ -13,12 +14,14 @@ class Store {
 
     _bootstrapAsync = async () => {
         this.sex = await DataService.getSex();
-
+       
         if (this.sex) {
             this.garments = await DataService.getGarmentsChecklist(this.sex);
+            this.items = await DataService.getGarments(this.sex);
             this.looks = await DataService.getLooksChecklist(this.sex);
         } else {
             this.garments = [];
+            this.items = [];
             this.looks = [];
         }
     };
@@ -26,38 +29,25 @@ class Store {
     @action setSex = async (sex) => {
         this.sex = sex;
         this.garments = await DataService.getGarmentsChecklist(this.sex);
+        this.items = await DataService.getGarments(this.sex);
         this.looks = await DataService.getLooksChecklist(this.sex);
 
         DataService.setSex(sex);
     };
 
-    @action onGarmentCheck(id) {
-        let newValue = false;
-
-        for (let i = 0; i < this.garments.length; ++i) {
-            const x = this.garments[i];
-            const garment = x.data.find(y => id === y.id);
-
-            if (garment) {
-                newValue = !garment.checked;
-                garment.checked = newValue;
+    @action onGarmentCheck = async (id) => {
+        for (let i = 0; i < this.items.length; ++i) {
+            const item = this.items[i];
+            if (id === item.id) {
+                item.checked = !item.checked;
                 break;
             }
         }
-
-        for (let i = 0; i < this.looks.length; ++i) {
-            const x = this.looks[i];
-
-            for (let j = 0; j < x.data.length; ++j) {
-                const y = x.data[j];
-                const garment = y.ingredients.find(y => id === y.id);
-
-                if (garment) {
-                    garment.checked = newValue;
-                    break;
-                }
-            }
-        }
+        
+        await DataService.setGarments(this.sex, this.items);
+    
+        this.garments = await DataService.getGarmentsChecklist(this.sex);
+        this.looks = await DataService.getLooksChecklist(this.sex);
     }
 }
 

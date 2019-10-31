@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, Dimensions, Image, FlatList, TouchableOpacity } from 'react-native';
 import { inject, observer } from 'mobx-react';
-
-import {
-    Card,
-    CardItem,
-    Container,
-    Icon,
-    List,
-    Tab,
-    Tabs,
-    TabHeading,
-    Text,
-} from 'native-base';
+import { Card, CardItem, Container, Icon, List, Tab, Tabs, TabHeading, Text } from 'native-base';
 
 import { GarmentItem } from './GarmentItem';
 import { HeaderIcon } from '../sections/HeaderIcon';
@@ -61,12 +50,10 @@ export class LookDetails extends Component {
                                 <Text style={ styles.textStyles }>{ look.recipe }</Text>
                             </CardItem>
                             <CardItem>
-                                <List
-                                    dataArray={ look.ingredients }
-                                    renderRow={(item) =>
-                                        <GarmentItem info={ item } />
-                                    }
-                                    keyExtractor={item => item.id.toString()} />
+                                <FlatList
+                                    data={ look.ingredients }
+                                    renderItem={({ item, index, section }) => <GarmentItem info={ item } />}
+                                    keyExtractor={(item, index) => item + index} />
                             </CardItem>
                         </Card>
                     </Tab>

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { inject, observer } from 'mobx-react';
+import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { Container } from 'native-base';
 
 import { GarmentList } from './GarmentList';
 import { HeaderIcon } from '../sections/HeaderIcon';
 
-@inject('store') @observer
 export class Wardrobe extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
@@ -25,13 +24,19 @@ export class Wardrobe extends Component {
     
     render() {
         return (
-            this.props.store.garments && this.props.store.garments.length ?
-                <GarmentList items={ this.props.store.garments } /> : <View />
+            <Container style={ styles.containerStyles }>
+                <GarmentList />
+            </Container>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    containerStyles: {
+        marginLeft: 5,
+        marginRight: 5,
+    },
+    
     headerCenterStyles: {
         flex: 1,
         alignItems: 'center',

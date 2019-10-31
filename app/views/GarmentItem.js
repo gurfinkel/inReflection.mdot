@@ -7,7 +7,7 @@ import { Body, CheckBox, Left, ListItem, Right, Text, Thumbnail } from 'native-b
 export class GarmentItem extends React.Component {
     constructor(props) {
         super(props);
-
+        
         this.state = {
             checked: props.info.checked,
         };
@@ -15,10 +15,10 @@ export class GarmentItem extends React.Component {
         this.onItemClick = this.onItemClick.bind(this);
     }
     
-    onItemClick() {
+    onItemClick = async () => {
         this.setState({ checked: !this.state.checked });
-        this.props.store.onGarmentCheck(this.props.info.id);
-    }
+        await this.props.store.onGarmentCheck(this.props.info.id);
+    };
 
     render() {
         const { info } = this.props;

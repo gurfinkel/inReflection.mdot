@@ -748,6 +748,12 @@ class DataService {
 
         return items;
     }
+    
+    async setGarments(sex, items) {
+        const key = utils.isBoy(sex) ? 'garments_for_boys' : 'garments_for_girls';
+        
+        await AsyncStorage.setItem(key, JSON.stringify(items));
+    }
 
     async getGarmentsChecklist(sex) {
         const items = utils.isBoy(sex) ? garmentsByCategoriesForBoys : garmentsByCategoriesForGirls;
