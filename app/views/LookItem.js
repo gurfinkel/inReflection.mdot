@@ -7,7 +7,7 @@ export class LookItem extends Component {
         return (
             <ListItem
                 key={ this.props.info.id }
-                onPress={ () => { this.props.navigate('LookDetailsRT', { id: this.props.info.id, }); } }
+                onPress={ () => { this.props.navigation.push('LookDetailsRT', { id: this.props.info.id, }); } }
                 style={ styles.itemStyles }>
                 <Body>
                     <Text>{ this.props.info.name }</Text>

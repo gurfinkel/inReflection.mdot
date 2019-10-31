@@ -12,17 +12,17 @@ export class Sex extends Component {
     };
     
     componentDidMount() {
-        this.props.navigation.navigate(this.props.store.sex ? 'WardrobeRT' : 'SexRT');
+        this.props.navigation.navigate(this.props.store.sex ? 'GarmentListRT' : 'SexRT');
     }
     
     goToAdventure = async (userSex) => {
         if (utils.isBoy(userSex)) {
             // Alert.alert('Coming soon', 'We are working on it.');
             await this.props.store.setSex(userSex);
-            this.props.navigation.navigate('WardrobeRT');
+            this.props.navigation.navigate('GarmentListRT');
         } else {
             await this.props.store.setSex(userSex);
-            this.props.navigation.navigate('WardrobeRT');
+            this.props.navigation.navigate('GarmentListRT');
         }
     };
     
