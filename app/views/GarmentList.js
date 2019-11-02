@@ -10,7 +10,11 @@ import { GarmentItem } from './GarmentItem';
 export class GarmentList extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
-            headerLeft: null,
+            headerLeft: (
+                <TouchableOpacity onPress={ () => navigation.navigate('SettingsRT') } style={ styles.headerLeftStyles }>
+                    <HeaderIcon iconType={ 2 } />
+                </TouchableOpacity>
+            ),
             headerTitle: (
                 <TouchableWithoutFeedback style={ styles.headerCenterStyles }>
                     <HeaderIcon iconType={ 0 } />
@@ -43,6 +47,15 @@ const styles = StyleSheet.create({
     containerStyles: {
         marginLeft: 5,
         marginRight: 5,
+    },
+    
+    headerLeftStyles: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 5,
+        height: '100%',
+        width: '100%',
     },
     
     headerCenterStyles: {

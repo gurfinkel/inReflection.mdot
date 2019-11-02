@@ -61,7 +61,7 @@ export class LookDetails extends Component {
                     <Tab heading={ <TabHeading><Icon type="FontAwesome5" name='file-image' /><Text>Image</Text></TabHeading> }>
                         <Card>
                             <CardItem cardBody>
-                                <Image source={{ uri: look.img }} style={ styles.lookImage } />
+                                <Image source={ look.img } style={ styles.lookImage } />
                             </CardItem>
                         </Card>
                     </Tab>

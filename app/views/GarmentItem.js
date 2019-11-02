@@ -30,7 +30,7 @@ export class GarmentItem extends React.Component {
                 style={ styles.itemStyles }
             >
                 <Left>
-                    <Thumbnail square source={{ uri: info.img }} />
+                    <Thumbnail square source={ info.img } />
                 </Left>
                 <Body>
                     <Text>{ info.name }</Text>
