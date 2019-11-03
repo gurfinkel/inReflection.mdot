@@ -48,7 +48,12 @@ class Store {
     
         this.garments = await DataService.getGarmentsChecklist(this.sex);
         this.looks = await DataService.getLooksChecklist(this.sex);
-    }
+    };
+    
+    @action cleanUpStorage = async () => {
+        this.sex = null;
+        await DataService.cleanUpStorage();
+    };
 }
 
 export default new Store();

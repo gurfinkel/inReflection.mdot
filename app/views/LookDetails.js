@@ -34,7 +34,7 @@ export class LookDetails extends Component {
                 break;
             }
         }
-
+        
         return (
             <Container style={ styles.containerStyles }>
                 <Tabs>

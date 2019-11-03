@@ -205,7 +205,7 @@ const looksForBoys = [
     {
         id: 1,
         name: 'From bed to work in one minute flat',
-        ingredients: [ 53, 6, 21, 102, 80, 82 ],
+        ingredients: [ 1 ],
         description: "Your alarm didn't go off",
         recipe: "Play it simple and steer clear of questionable combos. When you don't have time, don't experiment. Stick with chic basics that won't attract the attention of the fashion police. Biker boots loosen up what would otherwise be a rather strict look",
         img: require('./img/from_bed_to_work_in_one_minute_flat.jpg'),
@@ -805,12 +805,15 @@ class DataService {
     }
 
     async getSex() {
-        // await AsyncStorage.clear();
         return await AsyncStorage.getItem('userSex');
     }
 
     setSex(sex) {
         AsyncStorage.setItem('userSex', sex);
+    }
+    
+    async cleanUpStorage() {
+        await AsyncStorage.clear();
     }
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
+import { StyleSheet, Alert, Linking, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Button, Icon, Text } from "native-base";
 
@@ -25,14 +25,44 @@ export class Settings extends Component {
     
     contactUs = async () => {
         Alert.alert('Coming soon', 'We are working on it.');
-        // await this.props.store.setSex(userSex);
-        // this.props.navigation.navigate('GarmentListRT');
+        
+        // await this.sendEmail(
+        //     'flatorez@gmail.com',
+        //     'Greeting!',
+        //     'I think you are fucked up how many letters you get.'
+        // );
+    };
+    
+    sendEmail = async (to, subject, body, options = {}) => {
+        const { cc, bcc } = options;
+        
+        let url = `mailto:${to}`;
+        
+        // Create email link query
+        const query = new URLSearchParams({
+            subject: subject,
+            body: body,
+            cc: cc,
+            bcc: bcc
+        }).toString();
+        
+        if (query.length) {
+            url += `?${query}`;
+        }
+        
+        // check if we can use this link
+        const canOpen = await Linking.canOpenURL(url);
+        
+        if (!canOpen) {
+            throw new Error('Provided URL can not be handled');
+        }
+        
+        return Linking.openURL(url);
     };
     
     resetStorage = async () => {
-        Alert.alert('Coming soon', 'We are working on it.');
-        // await this.props.store.setSex(userSex);
-        // this.props.navigation.navigate('GarmentListRT');
+        await this.props.store.cleanUpStorage();
+        this.props.navigation.navigate('SexRT');
     };
     
     render() {
@@ -62,8 +92,7 @@ const styles = StyleSheet.create({
     },
     
     buttonRow: {
-        paddingLeft: 10,
-        paddingRight: 10,
+        padding: 10,
         flexDirection: 'row',
         justifyContent: 'space-around',
     },

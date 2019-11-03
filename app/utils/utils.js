@@ -14,4 +14,8 @@ export function isLooksSection(section) {
     return 1 == section;
 }
 
-export default { isBoy, isGirl, isWardrobeSection, isLooksSection };
+export function isSettings(section) {
+    return 2 == section;
+}
+
+export default { isBoy, isGirl, isWardrobeSection, isLooksSection, isSettings };

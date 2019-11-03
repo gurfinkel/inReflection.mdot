@@ -17,7 +17,7 @@ export class HeaderIcon extends Component {
             return (
                 <FontAwesomeIcon color='#808080' icon={ faPersonBooth } size={ 36 } />
             );
-        } else {
+        } else if (utils.isSettings(iconType)) {
             return (
                 <FontAwesomeIcon color='#808080' icon={ faCogs } size={ 36 } />
             );
