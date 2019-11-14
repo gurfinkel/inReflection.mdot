@@ -26,11 +26,11 @@ export class Settings extends Component {
     contactUs = async () => {
         Alert.alert('Coming soon', 'We are working on it.');
         
-        // await this.sendEmail(
-        //     'flatorez@gmail.com',
-        //     'Greeting!',
-        //     'I think you are fucked up how many letters you get.'
-        // );
+        await this.sendEmail(
+            'stylistadvisedme@gmail.com',
+            'There is a problem with your app',
+            ''
+        );
     };
     
     sendEmail = async (to, subject, body, options = {}) => {

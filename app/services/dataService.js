@@ -2,6 +2,8 @@ import { AsyncStorage } from 'react-native';
 
 import utils from '../utils';
 
+const webApiUrl = 'http://35.226.163.204:3000';
+
 const garmentsForBoys = [
     { id: 1, name: 'Black jeans', img: require('./img/black_jeans.jpg'),  },
 ];
