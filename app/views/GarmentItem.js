@@ -22,7 +22,7 @@ export class GarmentItem extends React.Component {
 
     render() {
         const { info } = this.props;
-
+        
         return (
             <ListItem
                 thumbnail
@@ -30,7 +30,7 @@ export class GarmentItem extends React.Component {
                 style={ styles.itemStyles }
             >
                 <Left>
-                    <Thumbnail square source={ info.img } />
+                    <Thumbnail square source={{ uri: 'data:image/png;base64,' + info.picture }} />
                 </Left>
                 <Body>
                     <Text>{ info.name }</Text>

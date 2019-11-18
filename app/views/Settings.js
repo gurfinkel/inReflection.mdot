@@ -23,6 +23,12 @@ export class Settings extends Component {
         }
     };
     
+    constructor(props) {
+        super(props);
+        
+        this.cleanUpStorage = this.cleanUpStorage.bind(this);
+    }
+    
     contactUs = async () => {
         Alert.alert('Coming soon', 'We are working on it.');
         
@@ -61,6 +67,23 @@ export class Settings extends Component {
     };
     
     resetStorage = async () => {
+        Alert.alert(
+            'Warning',
+            'Are you sure?',
+            [
+                {
+                    text: 'OK',
+                    onPress: this.cleanUpStorage,
+                },
+                {
+                    text: 'Cancel',
+                },
+            ],
+            { cancelable: false },
+        );
+    };
+    
+    cleanUpStorage = async() => {
         await this.props.store.cleanUpStorage();
         this.props.navigation.navigate('SexRT');
     };

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Alert, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Button, Icon, Text } from 'native-base';
-
-import utils from '../utils';
 
 @inject('store') @observer
 export class Sex extends Component {
@@ -12,18 +10,12 @@ export class Sex extends Component {
     };
     
     componentDidMount() {
-        this.props.navigation.navigate(this.props.store.sex ? 'GarmentListRT' : 'SexRT');
+        this.props.navigation.navigate(this.props.store.sex ? 'LookListRT' : 'SexRT');
     }
     
     goToAdventure = async (userSex) => {
-        if (utils.isBoy(userSex)) {
-            // Alert.alert('Coming soon', 'We are working on it.');
-            await this.props.store.setSex(userSex);
-            this.props.navigation.navigate('GarmentListRT');
-        } else {
-            await this.props.store.setSex(userSex);
-            this.props.navigation.navigate('GarmentListRT');
-        }
+        await this.props.store.setSex(userSex);
+        this.props.navigation.navigate('LookListRT');
     };
     
     render() {

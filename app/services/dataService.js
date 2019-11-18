@@ -4,6 +4,50 @@ import utils from '../utils';
 
 const webApiUrl = 'http://35.226.163.204:3000';
 
+const getGarmentsForBoys = async() => {
+    try {
+        let response = await fetch(webApiUrl + '/garments/list');
+        let responseJson = await response.json();
+        
+        return responseJson;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const getRacksForBoys = async() => {
+    try {
+        let response = await fetch(webApiUrl + '/racks/list');
+        let responseJson = await response.json();
+        
+        return responseJson;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const getLooksForBoys = async() => {
+    try {
+        let response = await fetch(webApiUrl + '/looks/list');
+        let responseJson = await response.json();
+        
+        return responseJson;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+const getOccasionsForBoys = async() => {
+    try {
+        let response = await fetch(webApiUrl + '/occasions/list');
+        let responseJson = await response.json();
+        
+        return responseJson;
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 const garmentsForBoys = [
     { id: 1, name: 'Black jeans', img: require('./img/black_jeans.jpg'),  },
 ];
@@ -136,7 +180,7 @@ const garmentsForGirls = [
 const garmentsByCategoriesForBoys = [
     {
         id: 1,
-        name: 'Pants, jumpsuits and shorts',
+        name: 'Поясная одежда',
         items: [ 1 ],
     },
 ];
@@ -206,10 +250,10 @@ const garmentsByCategoriesForGirls = [
 const looksForBoys = [
     {
         id: 1,
-        name: 'From bed to work in one minute flat',
+        name: 'Первый день на новом месте',
         ingredients: [ 1 ],
-        description: "Your alarm didn't go off",
-        recipe: "Play it simple and steer clear of questionable combos. When you don't have time, don't experiment. Stick with chic basics that won't attract the attention of the fashion police. Biker boots loosen up what would otherwise be a rather strict look",
+        description: "",
+        recipe: "Необходимо произвести впечатление, показав профессионализм, строгость и одновременно уверенность в себе. Для этого идеально подойдет серый костюм в ненавязчивую клетку с неформальными туфлями. Светло голубая рубашка подчеркнет глубину серого цвета и будет заметной деталью на монохромном фоне.",
         img: require('./img/from_bed_to_work_in_one_minute_flat.jpg'),
     },
 ];
@@ -620,14 +664,10 @@ const looksForGirls = [
 const looksByCategoriesForBoys = [
     {
         id: 1,
-        name: 'Business is business',
-        description: "For those who don't wear a uniform to work, you need to find an outfit that will make a good impression at the office - and we don't mean one with excessive (ulterior) motifs!",
+        name: 'Работа',
+        description: "",
         dilemma: [
-            'From bed to work in one minute flat',
-            'Date night',
-            'I have a tricky day ahead',
-            'Asking for a raise',
-            'From office to nightclub',
+            'Первый день на новом месте',
         ],
         items: [ 1 ],
     },
@@ -736,6 +776,12 @@ const looksByCategoriesForGirls = [
 
 class DataService {
     async getGarments(sex) {
+        if (utils.isBoy(sex)) {
+            let garments = await getGarmentsForBoys();
+            garments = garments.map(x => ({ ...x, checked: false }));
+            return garments;
+        }
+        
         const key = utils.isBoy(sex) ? 'garments_for_boys' : 'garments_for_girls';
         let items = await AsyncStorage.getItem(key);
 
@@ -758,6 +804,18 @@ class DataService {
     }
 
     async getGarmentsChecklist(sex) {
+        if (utils.isBoy(sex)) {
+            let racks = await getRacksForBoys();
+            let garments = await this.getGarments(sex);
+            return racks.map((category) => {
+                return {
+                    id: category.id,
+                    title: category.name,
+                    data: category.items.map((item) => garments.find(garment => garment.id === item)),
+                }
+            });
+        }
+        
         const items = utils.isBoy(sex) ? garmentsByCategoriesForBoys : garmentsByCategoriesForGirls;
         let sumItems = await this.getGarments(sex);
 
@@ -773,6 +831,23 @@ class DataService {
     }
 
     async getLooks(sex) {
+        if (utils.isBoy(sex)) {
+            let looks = await getLooksForBoys();
+            let garments = await this.getGarments(sex);
+            
+            return looks.map((x) => {
+                    return {
+                        id: x.id,
+                        name: x.name,
+                        description: x.description,
+                        ingredients: x.ingredients.map((item) => garments.find(garment => garment.id === item)),
+                        recipe: x.recipe,
+                        picture: x.picture,
+                    }
+                }
+            );
+        }
+        
         const items = utils.isBoy(sex) ? looksForBoys : looksForGirls;
         let sumItems = await this.getGarments(sex);
 
@@ -791,6 +866,21 @@ class DataService {
     }
 
     async getLooksChecklist(sex) {
+        if (utils.isBoy(sex)) {
+            let occasions = await getOccasionsForBoys();
+            let looks = await this.getLooks(sex);
+            
+            return occasions.map((category) => {
+                    return {
+                        id: category.id,
+                        title: category.name,
+                        description: category.description,
+                        data: category.items.map((item) => looks.find(look => look.id === item)),
+                    }
+                }
+            );
+        }
+        
         let items = utils.isBoy(sex) ? looksByCategoriesForBoys : looksByCategoriesForGirls;
         let sumItems = await this.getLooks(sex);
 
