@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
 import { inject, observer } from 'mobx-react';
 import { Body, CheckBox, Left, ListItem, Right, Text, Thumbnail } from 'native-base';
 
@@ -25,15 +25,14 @@ export class GarmentItem extends React.Component {
         
         return (
             <ListItem
-                thumbnail
                 onPress={ this.onItemClick }
                 style={ styles.itemStyles }
             >
                 <Left>
-                    <Thumbnail square source={{ uri: 'data:image/png;base64,' + info.picture }} />
+                    <Image source={{ uri: 'data:image/png;base64,' + info.picture }} style={ styles.imageStyles } />
                 </Left>
                 <Body>
-                    <Text>{ info.name }</Text>
+                    <Text style={ styles.textStyles }>{ info.name }</Text>
                 </Body>
                 <Right>
                     <CheckBox checked={ this.state.checked } />
@@ -46,6 +45,16 @@ export class GarmentItem extends React.Component {
 const styles = StyleSheet.create({
     itemStyles: {
         marginBottom: 3,
+        marginRight: 10,
         marginTop: 3,
+    },
+    
+    imageStyles: {
+        height: 106,
+        width: 70,
+    },
+    
+    textStyles: {
+        flex: 1,
     },
 });
