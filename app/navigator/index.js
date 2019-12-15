@@ -6,9 +6,16 @@ import { GarmentList } from '../views/GarmentList';
 import { LookDetails } from '../views/LookDetails';
 import { LookList } from '../views/LookList';
 import { Settings } from '../views/Settings';
-import { Sex } from '../views/Sex';
+import SexScreen from '../screens/sex.screen';
 
-const AppNavigator = createStackNavigator(
+const Sex = {
+    screen: SexScreen,
+    navigationOptions: {
+        header: null
+    },
+};
+
+const RouteConfig = createStackNavigator(
     {
         GarmentListRT: {
             screen: GarmentList,
@@ -22,13 +29,13 @@ const AppNavigator = createStackNavigator(
         SettingsRT: {
             screen: Settings,
         },
-        SexRT: {
-            screen: Sex,
-        },
+        SexRT: Sex,
     },
     {
         initialRouteName: 'SexRT',
     }
 );
 
-export default createAppContainer(AppNavigator);
+const AppNavigator = createAppContainer(RouteConfig);
+
+export default AppNavigator;
