@@ -1,7 +1,23 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { inject, observer } from 'mobx-react';
-import { Body, CheckBox, Left, ListItem, Right, Text, Thumbnail } from 'native-base';
+
+import {
+    StyleSheet,
+} from 'react-native';
+
+import {
+    inject,
+    observer,
+} from 'mobx-react';
+
+import {
+    Body,
+    CheckBox,
+    Left,
+    ListItem,
+    Right,
+    Text,
+    Thumbnail,
+} from 'native-base';
 
 @inject('store') @observer
 export class GarmentItem extends React.Component {
@@ -24,12 +40,12 @@ export class GarmentItem extends React.Component {
         const { info } = this.props;
         
         return (
-            <ListItem
+            <ListItem thumbnail
                 onPress={ this.onItemClick }
                 style={ styles.itemStyles }
             >
                 <Left>
-                    <Image source={{ uri: 'data:image/png;base64,' + info.picture }} style={ styles.imageStyles } />
+                    <Thumbnail square source={{ uri: 'data:image/png;base64,' + info.picture }} style={ styles.imageStyles } />
                 </Left>
                 <Body>
                     <Text style={ styles.textStyles }>{ info.name }</Text>

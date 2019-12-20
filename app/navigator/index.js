@@ -4,9 +4,16 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import { GarmentList } from '../views/GarmentList';
 import { LookDetails } from '../views/LookDetails';
-import { LookList } from '../views/LookList';
+import LooksScreen from '../screens/looks.screen';
 import { Settings } from '../views/Settings';
 import SexScreen from '../screens/sex.screen';
+
+const Looks = {
+    screen: LooksScreen,
+    navigationOptions: {
+        headerMode: 'screen',
+    },
+};
 
 const Sex = {
     screen: SexScreen,
@@ -23,9 +30,7 @@ const RouteConfig = createStackNavigator(
         LookDetailsRT: {
             screen: LookDetails,
         },
-        LookListRT: {
-            screen: LookList,
-        },
+        LooksRT: Looks,
         SettingsRT: {
             screen: Settings,
         },

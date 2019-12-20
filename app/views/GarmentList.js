@@ -21,7 +21,7 @@ export class GarmentList extends Component {
                 </TouchableWithoutFeedback>
             ),
             headerRight: (
-                <TouchableOpacity onPress={ () => navigation.navigate('LookListRT') } style={ styles.headerRightStyles }>
+                <TouchableOpacity onPress={ () => navigation.navigate('LooksRT') } style={ styles.headerRightStyles }>
                     <HeaderIcon iconType={ 1 } />
                 </TouchableOpacity>
             ),

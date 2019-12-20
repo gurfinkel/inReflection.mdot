@@ -7,7 +7,6 @@ import {
     Button,
     Icon,
     Form,
-    Text
 } from 'native-base';
 
 export default class Sex extends Component {
@@ -18,17 +17,16 @@ export default class Sex extends Component {
     componentDidMount() {
         const { navigate } = this.props.navigation;
         const { settings } = this.props.stores;
-        // navigate(settings.sex ? 'LookListRT' : 'SexRT');
+        
+        navigate(settings.sex ? 'LooksRT' : 'SexRT');
     }
     
     goToAdventure = async (userSex) => {
         const { navigate } = this.props.navigation;
         const { settings } = this.props.stores;
         
-        console.log(userSex);
-        
-        // await settings.setSex(userSex);
-        // navigate('LookListRT');
+        await settings.setSex(userSex);
+        navigate('LooksRT');
     };
     
     render() {
@@ -39,11 +37,9 @@ export default class Sex extends Component {
                 <View style={ styles.buttonRow }>
                     <Button onPress={ () => this.goToAdventure('1') } style={ styles.buttonStyles } large>
                         <Icon type="FontAwesome5" name='male' style={ styles.buttonIcon } />
-                        <Text style={ styles.buttonText }>Boy</Text>
                     </Button>
                     <Button onPress={ () => this.goToAdventure('2') } style={ styles.buttonStyles } large>
                         <Icon type="FontAwesome5" name='female' style={ styles.buttonIcon } />
-                        <Text style={ styles.buttonText }>Girl</Text>
                     </Button>
                 </View>
             </Form>
@@ -75,15 +71,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     
-    buttonText: {
-        color: '#ffffff',
-        fontSize: 36,
-        fontWeight: 'bold',
-    },
-    
     buttonIcon: {
         color: '#ffffff',
-        fontSize: 36,
+        fontSize: 42,
         fontWeight: 'bold',
     },
 });
